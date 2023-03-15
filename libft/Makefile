@@ -1,6 +1,12 @@
 Library		= libft
 
-files 	   = ft_isalnum
+files 	   = ft_isalpha \
+			ft_isalnum	\
+			ft_isascii	\
+			ft_isdigit	\
+			ft_isprint	\
+			ft_strlcpy	\
+			ft_strlen
 			
 Compiler	= gcc
 
