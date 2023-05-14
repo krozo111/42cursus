@@ -34,6 +34,10 @@ files 	   = ft_strlen \
 			 ft_putstr_fd \
 			 ft_putendl_fd \
 			 ft_putnbr_fd \
+			 ft_lstadd_front\
+			 ft_lstlast\
+			 ft_lstnew\
+			 ft_lstsize\
 			
 Compiler	= gcc
 

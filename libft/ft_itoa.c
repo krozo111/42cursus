@@ -5,55 +5,74 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jcorzo-h <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/14 07:54:23 by jcorzo-h          #+#    #+#             */
-/*   Updated: 2023/05/14 08:09:04 by jcorzo-h         ###   ########.fr       */
+/*   Created: 2023/04/22 07:54:23 by jcorzo-h          #+#    #+#             */
+/*   Updated: 2023/05/14 08:26:12 by jcorzo-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static unsigned int	ft_number_size(int number)
+int	ft_count(int nbr)
 {
-	unsigned int	length;
+	int	digit;
 
-	length = 0;
-	if (number == 0)
+	digit = 0;
+	if (nbr == 0)
 		return (1);
-	if (number < 0)
-		length += 1;
-	while (number != 0)
+	if (nbr < 0)
 	{
-		number /= 10;
-		length++;
+		nbr *= -1;
+		digit++;
 	}
-	return (length);
+	while (nbr > 0)
+	{
+		digit++;
+		nbr /= 10;
+	}
+	return (digit);
+}
+
+char	*ft_xneg(char *dest, char *src)
+{
+	int	i;
+
+	dest = malloc(12 * sizeof(char));
+	if (dest == NULL)
+		return (NULL);
+	i = 0;
+	while (i < 11)
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	dest[i] = '\0';
+	return (dest);
 }
 
 char	*ft_itoa(int n)
 {
-	char			*string;
-	unsigned int	number;
-	unsigned int	length;
+	char	*str;
+	int		digit;
+	int		nb;
 
-	length = ft_number_size(n);
-	string = (char *)malloc(sizeof(char) * (length + 1));
-	if (string == NULL)
-		return (NULL);
-	if (number < 0)
+	str = NULL;
+	if (n == -2147483648)
+		return (ft_xneg(str, "-2147483648"));
+	nb = n;
+	digit = ft_count(nb);
+	if (n < 0)
+		nb *= -1;
+	str = malloc((digit + 1) * sizeof(char));
+	if (str == NULL)
+		return (0);
+	str[digit] = '\0';
+	while (digit > 0)
 	{
-		string[0] = '-';
-		number = -n;
+		str[digit - 1] = (nb % 10) + 48;
+		nb /= 10;
+		digit--;
 	}
-	else
-		number = n;
-	if (number == 0)
-		string[0] = '0';
-	string[length] = '\0';
-	while (number != 0)
-	{
-		string[length - 1] = (number % 10) + '0';
-		number = number / 10;
-		length--;
-	}
-	return (string);
+	if (n < 0)
+		str[digit] = '-';
+	return (str);
 }
